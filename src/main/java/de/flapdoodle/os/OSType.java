@@ -16,16 +16,10 @@
  */
 package de.flapdoodle.os;
 
-import de.flapdoodle.os.common.HasPecularities;
-
-import java.util.List;
-
-public interface OS extends HasPecularities {
-	List<? extends Distribution> distributions();
-
-	List<? extends Architecture> architectures();
-
-	String name();
-
-	OSType type();
+public enum OSType {
+	Linux,
+	Windows,
+	OS_X,
+	Solaris,
+	FreeBSD
 }

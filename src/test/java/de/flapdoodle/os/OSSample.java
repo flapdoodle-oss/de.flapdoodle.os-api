@@ -33,29 +33,39 @@ import java.util.List;
 import static de.flapdoodle.os.OsReleaseFiles.*;
 
 public enum OSSample implements OS {
-	Linux(CommonArchitecture.class, LinuxDistribution.class, osNameMatches("Linux")),
-	OS_X(CommonArchitecture.class, OS_X_Distribution.class, osNameMatches("Mac OS X"));
+	Linux(OSType.Linux, CommonArchitecture.class, LinuxDistribution.class, osNameMatches("Linux")),
+	OS_X(OSType.OS_X, CommonArchitecture.class, OS_X_Distribution.class, osNameMatches("Mac OS X"));
 
+	private OSType type;
 	private final List<Peculiarity> peculiarities;
 	private final List<? extends Distribution> distributions;
 	private final List<? extends Architecture> architectures;
 
 	<A extends Enum<A> & Architecture, T extends Enum<T> & Distribution> OSSample(
+		OSType type,
 		Class<A> architecureClazz,
 		Class<T> clazz,
 		DistinctPeculiarity<?>... peculiarities
 	) {
+		this.type = type;
 		this.peculiarities  = HasPecularities.asList(peculiarities);
 		this.architectures = Enums.valuesAsList(architecureClazz);
 		this.distributions = Enums.valuesAsList(clazz);
 	}
 
+	@Override
 	public List<? extends Distribution> distributions() {
 		return distributions;
 	}
 
+	@Override
 	public List<? extends Architecture> architectures() {
 		return  architectures;
+	}
+
+	@Override
+	public OSType type() {
+		return type;
 	}
 
 	@Override
