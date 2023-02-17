@@ -30,15 +30,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static de.flapdoodle.os.OsReleaseFiles.versionMatches;
+import static de.flapdoodle.os.OsReleaseFiles.*;
 
 public enum OSSample implements OS {
 	Linux(CommonArchitecture.class, LinuxDistribution.class, osNameMatches("Linux")),
-//	Windows(CommonArchitecture.class, WindowsDistribution.class, osNameMatches("Windows.*")),
-	OS_X(CommonArchitecture.class, OS_X_Distribution.class, osNameMatches("Mac OS X"))
-//	Solaris(CommonArchitecture.class, SolarisDistribution.class, osNameMatches(".*SunOS.*")),
-//	FreeBSD(CommonArchitecture.class, FreeBSDDistribution.class, osNameMatches("FreeBSD"))
-	;
+	OS_X(CommonArchitecture.class, OS_X_Distribution.class, osNameMatches("Mac OS X"));
 
 	private final List<Peculiarity> peculiarities;
 	private final List<? extends Distribution> distributions;
@@ -90,15 +86,9 @@ public enum OSSample implements OS {
 	}
 
 	public enum LinuxDistribution implements Distribution {
-		Ubuntu(UbuntuVersion.class, OsReleaseFiles.osReleaseFileNameMatches("Ubuntu")),
+		Amazon(AmazonVersion.class, AmazonVersion.osVersionMatches(".*amzn.*")),
 		CentOS(CentosVersion.class, CentosVersion.centosReleaseFileNameMatches("CentOS")),
-//		Redhat(RedhatVersion.class, OsReleaseFiles.osReleaseFileNameMatches("Red Hat")),
-//		Oracle(OracleVersion.class, OsReleaseFiles.osReleaseFileNameMatches("Oracle")),
-//		OpenSUSE(OpenSUSEVersion.class, OsReleaseFiles.osReleaseFileNameMatches("openSUSE")),
-//		LinuxMint(LinuxMintVersion.class, OsReleaseFiles.osReleaseFileNameMatches("Linux Mint")),
-//		Debian(DebianVersion.class, OsReleaseFiles.osReleaseFileNameMatches("Debian")),
-		Amazon(AmazonVersion.class, AmazonVersion.osVersionMatches(".*amzn.*"))
-		;
+		Ubuntu(UbuntuVersion.class, OsReleaseFiles.osReleaseFileNameMatches("Ubuntu"));
 
 		private final List<Peculiarity> peculiarities;
 		private final List<? extends Version> versions;
@@ -120,9 +110,6 @@ public enum OSSample implements OS {
 	}
 
 	public enum AmazonVersion implements VersionWithPriority {
-		// amzn2
-		// os.version=4.9.76-3.78.amzn1.x86_64
-		AmazonLinux(osVersionMatches(".*amzn1.*")),
 		AmazonLinux2(osVersionMatches(".*amzn2.*"));
 
 		private final List<Peculiarity> peculiarities;
@@ -136,10 +123,6 @@ public enum OSSample implements OS {
 			return peculiarities;
 		}
 
-		/**
-		 * as we rely on 'os.version' only, this detection is pretty weak
-		 * it should have a lower priority than others
-		 */
 		@Override
 		public int priority() {
 			return -1;
@@ -155,11 +138,7 @@ public enum OSSample implements OS {
 	}
 
 	public enum CentosVersion implements Version {
-		CentOS_6(OneOf.of(versionMatches(centosReleaseFile(),"6"), versionMatches(OsReleaseFiles.osReleaseFile(),"6"))),
-		CentOS_7(OneOf.of(versionMatches(centosReleaseFile(),"7"), versionMatches(OsReleaseFiles.osReleaseFile(),"7"))),
-		CentOS_8(OneOf.of(versionMatches(centosReleaseFile(),"8"), versionMatches(OsReleaseFiles.osReleaseFile(),"8"))),
-		CentOS_9(OneOf.of(versionMatches(centosReleaseFile(),"9"), versionMatches(OsReleaseFiles.osReleaseFile(),"9"))),
-		;
+		CentOS_7(OneOf.of(versionMatches(centosReleaseFile(),"7"), versionMatches(OsReleaseFiles.osReleaseFile(),"7")));
 
 		public static final String RELEASE_FILE_NAME="/etc/centos-release";
 
@@ -175,7 +154,7 @@ public enum OSSample implements OS {
 		}
 
 		static Peculiarity centosReleaseFileNameMatches(String name) {
-			return OneOf.of(OsReleaseFiles.nameMatches(centosReleaseFile(), name), OsReleaseFiles.nameMatches(OsReleaseFiles.osReleaseFile(), name));
+			return OneOf.of(nameMatches(centosReleaseFile(), name), nameMatches(OsReleaseFiles.osReleaseFile(), name));
 		}
 
 		private static Attribute<OsReleaseFile> centosReleaseFile() {
@@ -184,19 +163,7 @@ public enum OSSample implements OS {
 	}
 
 	public enum UbuntuVersion implements Version {
-		Ubuntu_16_04(OsReleaseFiles.osReleaseFileVersionMatches("16.04")),
-		Ubuntu_16_10(OsReleaseFiles.osReleaseFileVersionMatches("16.10")),
-		Ubuntu_18_04(OsReleaseFiles.osReleaseFileVersionMatches("18.04")),
-		Ubuntu_18_10(OsReleaseFiles.osReleaseFileVersionMatches("18.10")),
-		Ubuntu_19_04(OsReleaseFiles.osReleaseFileVersionMatches("19.04")),
-		Ubuntu_19_10(OsReleaseFiles.osReleaseFileVersionMatches("19.10")),
-		Ubuntu_20_04(OsReleaseFiles.osReleaseFileVersionMatches("20.04")),
-		Ubuntu_20_10(OsReleaseFiles.osReleaseFileVersionMatches("20.10")),
-		Ubuntu_21_04(OsReleaseFiles.osReleaseFileVersionMatches("21.04")),
-		Ubuntu_21_10(OsReleaseFiles.osReleaseFileVersionMatches("21.10")),
-		Ubuntu_22_04(OsReleaseFiles.osReleaseFileVersionMatches("22.04")),
-		Ubuntu_22_10(OsReleaseFiles.osReleaseFileVersionMatches("22.10")),
-		;
+		Ubuntu_18_10(osReleaseFileVersionMatches("18.10"));
 
 		private final List<Peculiarity> peculiarities;
 

@@ -16,7 +16,6 @@
  */
 package de.flapdoodle.os.common;
 
-import de.flapdoodle.os.Platform;
 import de.flapdoodle.os.common.attributes.Attribute;
 import de.flapdoodle.os.common.attributes.AttributeExtractor;
 import de.flapdoodle.os.common.attributes.AttributeExtractorLookup;

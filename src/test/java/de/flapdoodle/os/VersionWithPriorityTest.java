@@ -38,7 +38,7 @@ class VersionWithPriorityTest {
 			.operatingSystem(OSSample.Linux)
 			.architecture(CommonArchitecture.X86_64)
 			.distribution(OSSample.LinuxDistribution.CentOS)
-			.version(OSSample.CentosVersion.CentOS_8)
+			.version(OSSample.CentosVersion.CentOS_7)
 			.build();
 
 		List<ImmutablePlatform> platforms = Immutables.asList(amazon2,centos8);
