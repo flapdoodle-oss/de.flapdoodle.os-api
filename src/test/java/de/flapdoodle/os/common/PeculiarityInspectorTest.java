@@ -61,6 +61,21 @@ class PeculiarityInspectorTest {
 	}
 
 	@Test
+	void matchAllPecularity() {
+		AttributeExtractorLookup attributeExtractorLookup = AttributeExtractorLookup.with(
+			TextFile.any(), attribute -> attribute.name().equals("bar") ? Optional.of("bar") : Optional.empty());
+		MatcherLookup matcherLookup = MatcherLookup.forType(MatchPattern.class, new PatternMatcher());
+
+		DistinctPeculiarity<String> foo = DistinctPeculiarity.of(Attributes.textFile("foo"), Matchers.matchPattern("^[0-9]+$"));
+		DistinctPeculiarity<String> bar = DistinctPeculiarity.of(Attributes.textFile("bar"), Matchers.matchPattern("^[a-z]+$"));
+		AllOf any = AllOf.of(foo, bar);
+
+		boolean matches = PeculiarityInspector.matches(attributeExtractorLookup, matcherLookup, any);
+
+		assertThat(matches).isFalse();
+	}
+
+	@Test
 	void matchListOfPecularities() {
 		AttributeExtractorLookup attributeExtractorLookup = AttributeExtractorLookup.with(
 				TextFile.any(), attribute -> attribute.name().equals("foo") ? Optional.of("fooo") : Optional.empty())

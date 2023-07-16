@@ -105,6 +105,9 @@ public abstract class PeculiarityInspector {
       if (it instanceof OneOf) {
         return matches(attributeExtractorLookup, matcherLookup, (OneOf) it);
       }
+      if (it instanceof AllOf) {
+        return matches(attributeExtractorLookup, matcherLookup, (AllOf) it);
+      }
       throw new IllegalArgumentException("unknown peculiarity: "+it);
     }
     return true;
@@ -120,6 +123,18 @@ public abstract class PeculiarityInspector {
       }
     }
     return false;
+  }
+
+  public static boolean matches(
+    AttributeExtractorLookup attributeExtractorLookup,
+    MatcherLookup matcherLookup,
+    AllOf allOf) {
+    for (DistinctPeculiarity<?> it : allOf.pecularities()) {
+      if (!matches(attributeExtractorLookup, matcherLookup, it)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   // TODO cache extracted attributes
