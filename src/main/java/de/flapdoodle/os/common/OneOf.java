@@ -24,14 +24,14 @@ import java.util.List;
 @Value.Immutable
 public abstract class OneOf implements Peculiarity {
 	@Value.Parameter
-	public abstract List<DistinctPeculiarity<?>> pecularities();
+	public abstract List<Peculiarity> pecularities();
 
 	@Value.Check
 	protected void check() {
 		if (pecularities().isEmpty()) throw new IllegalArgumentException("is empty");
 	}
 
-	public static OneOf of(DistinctPeculiarity<?>... peculiarities) {
+	public static OneOf of(Peculiarity... peculiarities) {
 		return ImmutableOneOf.of(Arrays.asList(peculiarities));
 	}
 }

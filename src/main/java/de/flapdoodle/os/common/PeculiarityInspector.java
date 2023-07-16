@@ -99,16 +99,7 @@ public abstract class PeculiarityInspector {
           Iterable<? extends Peculiarity> peculiarities
   ) {
     for (Peculiarity it : peculiarities) {
-      if (it instanceof DistinctPeculiarity) {
-        return matches(attributeExtractorLookup, matcherLookup, (DistinctPeculiarity<?>) it);
-      }
-      if (it instanceof OneOf) {
-        return matches(attributeExtractorLookup, matcherLookup, (OneOf) it);
-      }
-      if (it instanceof AllOf) {
-        return matches(attributeExtractorLookup, matcherLookup, (AllOf) it);
-      }
-      throw new IllegalArgumentException("unknown peculiarity: "+it);
+      return matches(attributeExtractorLookup, matcherLookup, it);
     }
     return true;
   }
@@ -116,8 +107,25 @@ public abstract class PeculiarityInspector {
   public static boolean matches(
     AttributeExtractorLookup attributeExtractorLookup,
     MatcherLookup matcherLookup,
+    Peculiarity peculiarity
+  ) {
+    if (peculiarity instanceof DistinctPeculiarity) {
+      return matches(attributeExtractorLookup, matcherLookup, (DistinctPeculiarity<?>) peculiarity);
+    }
+    if (peculiarity instanceof OneOf) {
+      return matches(attributeExtractorLookup, matcherLookup, (OneOf) peculiarity);
+    }
+    if (peculiarity instanceof AllOf) {
+      return matches(attributeExtractorLookup, matcherLookup, (AllOf) peculiarity);
+    }
+    throw new IllegalArgumentException("unknown peculiarity: "+peculiarity);
+  }
+
+  public static boolean matches(
+    AttributeExtractorLookup attributeExtractorLookup,
+    MatcherLookup matcherLookup,
     OneOf oneOf) {
-    for (DistinctPeculiarity<?> it : oneOf.pecularities()) {
+    for (Peculiarity it : oneOf.pecularities()) {
       if (matches(attributeExtractorLookup, matcherLookup, it)) {
         return true;
       }
@@ -129,7 +137,7 @@ public abstract class PeculiarityInspector {
     AttributeExtractorLookup attributeExtractorLookup,
     MatcherLookup matcherLookup,
     AllOf allOf) {
-    for (DistinctPeculiarity<?> it : allOf.pecularities()) {
+    for (Peculiarity it : allOf.pecularities()) {
       if (!matches(attributeExtractorLookup, matcherLookup, it)) {
         return false;
       }
