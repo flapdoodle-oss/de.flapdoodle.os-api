@@ -4,7 +4,7 @@
     <groupId>de.flapdoodle</groupId>
     <artifactId>de.flapdoodle.os-api</artifactId>
     <name>Flapdoodle OS Detection Library</name>
-    <version>1.4.2-SNAPSHOT</version>
+    <version>1.5.0</version>
 
     <description>os detection library ...</description>
     <url>http://github.com/flapdoodle-oss/de.flapdoodle.os-api</url>
@@ -30,7 +30,7 @@
         <connection>scm:git:git@github.com:flapdoodle-oss/de.flapdoodle.os-api.git</connection>
         <developerConnection>scm:git:git@github.com:flapdoodle-oss/de.flapdoodle.os-api.git</developerConnection>
         <url>git@github.com:flapdoodle-oss/de.flapdoodle.os-api.git</url>
-      <tag>HEAD</tag>
+      <tag>de.flapdoodle.os-api-1.5.0</tag>
   </scm>
 
     <distributionManagement>
