@@ -66,9 +66,9 @@ public abstract class PeculiarityInspector {
   ) {
     List<T> matching = matching(attributeExtractorLookup, matcherLookup, items);
     if (matching.size()>1) {
-      logger.warn("more than one match: "+matching);
+			logger.warn("more than one match: {}, using first match", matching);
     }
-    return matching.size() == 1
+    return !matching.isEmpty()
             ? Optional.of(matching.get(0))
             : Optional.empty();
   }

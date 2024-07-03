@@ -65,7 +65,7 @@ class PlatformTest {
 	}
 
 	@Test
-	void failToDetectLinuxDistIfMoreThanOneMatchPossible() {
+	void useFirstLinuxDistIfMoreThanOneMatchPossible() {
 		AttributeExtractorLookup attributeExtractorLookup = AttributeExtractorLookup
 			.with(SystemProperty.any(), it -> {
 				if (it.name().equals("os.name")) {
@@ -94,6 +94,8 @@ class PlatformTest {
 			.isEqualTo(ImmutablePlatform.builder()
 				.operatingSystem(OSSample.Linux)
 				.architecture(CommonArchitecture.X86_64)
+				.distribution(OSSample.LinuxDistribution.Amazon)
+				.version(OSSample.AmazonVersion.AmazonLinux2)
 				.build());
 	}
 

@@ -59,7 +59,7 @@ public abstract class Platform {
     }
     Platform result = detect(osList, attributeExtractorLookup, matcherLookup);
     if (explain) {
-      logger.info("Platform.detect() -> "+result);
+			logger.info("Platform.detect() -> {}", result);
     }
     return result;
   }
@@ -78,7 +78,7 @@ public abstract class Platform {
     }
     List<Platform> result = guess(osList, attributeExtractorLookup, matcherLookup);
     if (explain) {
-      logger.info("Platform.detect() -> "+result);
+			logger.info("Platform.guess() -> {}", result);
     }
     return result;
   }
@@ -90,7 +90,7 @@ public abstract class Platform {
   private static Optional<Platform> override(Collection<? extends OS> osList) {
     String override = System.getProperty("de.flapdoodle.os.override");
     if (override!=null && !override.trim().isEmpty()) {
-      logger.info("try to override Platform.detect() with "+override);
+			logger.info("try to override Platform.detect() with {}", override);
       return Optional.of(parseOverride(osList, override));
     }
     return Optional.empty();
