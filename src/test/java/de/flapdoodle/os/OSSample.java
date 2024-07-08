@@ -120,11 +120,14 @@ public enum OSSample implements OS {
 	}
 
 	public enum AmazonVersion implements VersionWithPriority {
-		AmazonLinux2(osVersionMatches(".*amzn2.*"));
+		AmazonLinux2(-1, osVersionMatches(".*amzn2.*")),
+		AmazonLinux2023(1, osVersionMatches(".*amzn2023.*"));
 
+		private final int priority;
 		private final List<Peculiarity> peculiarities;
 
-		AmazonVersion(Peculiarity... peculiarities) {
+		AmazonVersion(int priority, Peculiarity... peculiarities) {
+			this.priority = priority;
 			this.peculiarities  = HasPecularities.asList(peculiarities);
 		}
 
@@ -135,7 +138,7 @@ public enum OSSample implements OS {
 
 		@Override
 		public int priority() {
-			return -1;
+			return priority;
 		}
 
 		static DistinctPeculiarity<String> osVersionMatches(String name) {

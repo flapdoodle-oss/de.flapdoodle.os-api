@@ -75,7 +75,7 @@ class PlatformTest {
 					return Optional.of("amd64");
 				}
 				if (it.name().equals("os.version")) {
-					return Optional.of("4.14.256-197.484.amzn2.x86_64");
+					return Optional.of("4.14.256-197.484.amzn2023.x86_64");
 				}
 				return Optional.empty();
 			})
@@ -95,8 +95,33 @@ class PlatformTest {
 				.operatingSystem(OSSample.Linux)
 				.architecture(CommonArchitecture.X86_64)
 				.distribution(OSSample.LinuxDistribution.Amazon)
-				.version(OSSample.AmazonVersion.AmazonLinux2)
+				.version(OSSample.AmazonVersion.AmazonLinux2023)
 				.build());
+
+		List<Platform> guessed = Platform.guess(OSSample.all(), attributeExtractorLookup, matcherLookup);
+
+		assertThat(guessed)
+			.hasSize(3)
+			.containsExactly(
+				ImmutablePlatform.builder()
+					.operatingSystem(OSSample.Linux)
+					.architecture(CommonArchitecture.X86_64)
+					.distribution(OSSample.LinuxDistribution.Amazon)
+					.version(OSSample.AmazonVersion.AmazonLinux2023)
+					.build(),
+				ImmutablePlatform.builder()
+					.operatingSystem(OSSample.Linux)
+					.architecture(CommonArchitecture.X86_64)
+					.distribution(OSSample.LinuxDistribution.Amazon)
+					.version(OSSample.AmazonVersion.AmazonLinux2)
+					.build(),
+				ImmutablePlatform.builder()
+					.operatingSystem(OSSample.Linux)
+					.architecture(CommonArchitecture.X86_64)
+					.distribution(OSSample.LinuxDistribution.CentOS)
+					.version(OSSample.CentosVersion.CentOS_7)
+					.build()
+			);
 	}
 
 	@Test

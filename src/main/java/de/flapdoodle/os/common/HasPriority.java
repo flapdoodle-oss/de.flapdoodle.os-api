@@ -14,10 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.flapdoodle.os;
+package de.flapdoodle.os.common;
 
-import de.flapdoodle.os.common.HasPriority;
+import de.flapdoodle.os.VersionWithPriority;
 
-public interface VersionWithPriority extends Version, HasPriority {
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
+public interface HasPriority {
+	int priority();
+
+	static int priority(Object object) {
+		return (object instanceof VersionWithPriority)
+			? ((VersionWithPriority) object).priority()
+			: 0;
+	}
+
+	static <T> List<T> sortedByPriority(List<? extends T> list) {
+		return list.stream()
+			.sorted((Comparator<T>) (a, b) -> Integer.compare(
+				priority(b),
+				priority(a)))
+			.collect(Collectors.toList());
+	}
 }

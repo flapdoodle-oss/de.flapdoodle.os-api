@@ -86,9 +86,11 @@ public abstract class PeculiarityInspector {
           MatcherLookup matcherLookup,
           Iterable<? extends T> items
   ) {
-    return StreamSupport.stream(items.spliterator(), false)
-            .filter(it -> matches(attributeExtractorLookup, matcherLookup, it.pecularities()))
-            .collect(Collectors.toList());
+    List<T> unsorted = StreamSupport.stream(items.spliterator(), false)
+      .filter(it -> matches(attributeExtractorLookup, matcherLookup, it.pecularities()))
+      .collect(Collectors.toList());
+    
+    return HasPriority.sortedByPriority(unsorted);
   }
 
 

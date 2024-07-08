@@ -206,13 +206,13 @@ public abstract class Platform {
       )
       .collect(Collectors.toList());
 
-    List<? extends Platform> matches = !platforms.isEmpty()
+    List<Platform> matches = !platforms.isEmpty()
       ? platforms
       : Immutables.asNonEmptyList(ImmutablePlatform.builder()
       .operatingSystem(os)
       .architecture(architecture)
       .build());
 
-    return VersionWithPriority.sorteByPriority(matches);
+    return matches;
   }
 }
