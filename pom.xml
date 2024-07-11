@@ -336,6 +336,12 @@
 
     <profiles>
         <profile>
+            <id>without-pitest</id>
+            <properties>
+                <pitest.skip>true</pitest.skip>
+            </properties>
+        </profile>
+        <profile>
             <id>release-sign-artifacts</id>
             <activation>
                 <property>
