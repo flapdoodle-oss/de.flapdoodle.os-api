@@ -16,18 +16,17 @@
  */
 package de.flapdoodle.os.common.matcher;
 
+import de.flapdoodle.os.common.types.LsbReleaseFile;
+import de.flapdoodle.os.common.types.OsReleaseFile;
+import org.immutables.value.Value;
+
 import java.util.regex.Pattern;
 
-public class Matchers {
-  public static MatchPattern matchPattern(String pattern) {
-    return ImmutableMatchPattern.of(Pattern.compile(pattern));
-  }
+@Value.Immutable
+public interface LsbReleaseFileMapEntry extends Match<LsbReleaseFile> {
+  @Value.Parameter
+  String key();
 
-  public static OsReleaseFileMapEntry osReleaseFileEntry(String key, String valuePattern) {
-    return ImmutableOsReleaseFileMapEntry.of(key, Pattern.compile(valuePattern));
-  }
-
-  public static LsbReleaseFileMapEntry lsbReleaseFileEntry(String key, String valuePattern) {
-    return ImmutableLsbReleaseFileMapEntry.of(key, Pattern.compile(valuePattern));
-  }
+  @Value.Parameter
+  Pattern valuePattern();
 }
