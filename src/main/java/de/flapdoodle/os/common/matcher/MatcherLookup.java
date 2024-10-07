@@ -58,6 +58,7 @@ public interface MatcherLookup {
 	static MatcherLookup systemDefault() {
 		return MatcherLookup.forType(MatchPattern.class, new PatternMatcher())
 						.join(forType(OsReleaseFileMapEntry.class, new OsReleaseFileEntryMatcher()))
+						.join(forType(LsbReleaseFileMapEntry.class, new LsbReleaseFileEntryMatcher()))
 						.join(failing());
 	}
 }
