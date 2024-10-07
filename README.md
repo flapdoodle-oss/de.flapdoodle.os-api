@@ -12,7 +12,7 @@ Stable (Maven Central Repository, Released: 07.10.2024 - wait 24hrs for [maven c
 	<dependency>
 		<groupId>de.flapdoodle</groupId>
 		<artifactId>de.flapdoodle.os-api</artifactId>
-		<version>1.6.2</version>
+		<version>1.7.0</version>
 	</dependency>
 
 
